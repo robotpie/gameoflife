@@ -64,16 +64,16 @@ public class CreationTest {
 	@Test
 	public void testAccessCorners() {
 		GameOfLife gol = new GameOfLife(10, 10);
-		assertEquals(0, gol.getState(0,0));
-		assertEquals(0, gol.getState(9,9));
-		assertEquals(0, gol.getState(0,9));
-		assertEquals(0, gol.getState(9,0));
+		assertEquals(0, gol.getStateAt(0,0));
+		assertEquals(0, gol.getStateAt(9,9));
+		assertEquals(0, gol.getStateAt(0,9));
+		assertEquals(0, gol.getStateAt(9,0));
 	}
 	
 	@Test (expected = ArrayIndexOutOfBoundsException.class)
 	public void testAccessOutOfBounds() {
 		GameOfLife gol = new GameOfLife(10, 10);
-		int x = gol.getState(10, 10);
+		int x = gol.getStateAt(10, 10);
 	}
 	
 	@Test
