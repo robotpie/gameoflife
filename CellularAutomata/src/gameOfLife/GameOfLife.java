@@ -5,6 +5,10 @@ package gameOfLife;
  * 
  */
 
+///TODO: add in timestep field
+//TODO: add method to initialize by string
+//TODO: add method to compute next state use conway rules
+
 public class GameOfLife {
 private int lattice[][];
 private int rows;
