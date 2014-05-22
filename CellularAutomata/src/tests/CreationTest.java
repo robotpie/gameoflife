@@ -82,6 +82,16 @@ public class CreationTest {
 		assertEquals("000\n000\n000\n", gol.toString());
 	}
 	
+	@Test
+	public void testCreateWithInitialState() throws Exception {
+		int initialState[][] = new int[][]{
+				  { 0, 1, 0, 0 },
+				  { 0, 0, 1, 0 },
+				  { 1, 1, 1, 0 },
+				  { 0, 0, 0, 0 },
+				};
+		GameOfLife gol = new GameOfLife(initialState);
+	}
 	
 
 }

@@ -35,7 +35,11 @@ private int currentStep;
 	public GameOfLife(int [][] initialState){
 		//GameOfLife(initialState.length, initialState[0].length); - can't chain ctor calls apparently
 		currentStep = 0;
-		if(initialState.length <= 0 || initialState[0].length <= 0 || initialState.length != initialState[0].length )
+		this.rows = initialState.length;
+		this.columns = initialState[0].length;
+		lattice = new int[rows][columns];
+		
+		if(rows <= 0 || columns <= 0 || rows != columns )
 		{
 			throw new IllegalArgumentException("rows and columns must both be nonzero and equal length") ;
 		}
@@ -46,8 +50,7 @@ private int currentStep;
 				lattice[row][column] = initialState[row][column];
 			}
 		}	
-		this.rows = initialState.length;
-		this.columns = initialState[0].length;
+		
 	};
 	
 	public int getStateAt(int row, int column)
@@ -134,7 +137,7 @@ private int currentStep;
 	}
 	
 	//TODO: validate arguments
-	public int getLeft(int row, int column, int [][] a_lattice)
+	private int getLeft(int row, int column, int [][] a_lattice)
 	{
 		int value = 0;
 		if(column ==0)
@@ -147,7 +150,7 @@ private int currentStep;
 		}
 	}
 	
-	public int getRight(int row, int column, int [][] a_lattice)
+	private int getRight(int row, int column, int [][] a_lattice)
 	{
 		int value = 0;
 		if(column == a_lattice[row].length - 1)
@@ -161,7 +164,7 @@ private int currentStep;
 		
 	}
 	
-	public int getUp(int row, int column, int [][] a_lattice)
+	private int getUp(int row, int column, int [][] a_lattice)
 	{
 		int value = 0;
 		if(row == 0)
@@ -175,7 +178,7 @@ private int currentStep;
 		
 	}
 	
-	public int getDown(int row, int column, int [][] a_lattice)
+	private int getDown(int row, int column, int [][] a_lattice)
 	{
 		int value = 0;
 		if(row == a_lattice.length - 1)
