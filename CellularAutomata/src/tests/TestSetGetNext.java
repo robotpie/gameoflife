@@ -32,10 +32,11 @@ public class TestSetGetNext {
 	@Before
 	public void setUp() throws Exception {
 		initialState = new int[][]{
-				  { 0, 1, 0, 0 },
-				  { 0, 0, 1, 0 },
-				  { 1, 1, 1, 0 },
-				  { 0, 0, 0, 0 },
+				  { 0, 1, 0, 0, 0 },
+				  { 0, 0, 1, 0, 0 },
+				  { 1, 1, 1, 0, 0 },
+				  { 0, 0, 0, 0, 0 },
+				  { 0, 0, 0, 0, 0 },
 				};
 	}
 
@@ -57,16 +58,19 @@ public class TestSetGetNext {
 	@Test
 	public void testArraysEquals(){
 		int [] [] anotherArray = new int[][]{
-				  { 0, 1, 0, 0 },
-				  { 0, 0, 1, 0 },
-				  { 1, 1, 1, 0 },
-				  { 0, 0, 0, 0 },
+				  { 0, 1, 0, 0, 0 },
+				  { 0, 0, 1, 0, 0 },
+				  { 1, 1, 1, 0, 0 },
+				  { 0, 0, 0, 0, 0 },
+				  { 0, 0, 0, 0, 0 },
+
 				};
 		int [] [] aThirdArray = new int[][]{
-				  { 0, 1, 0, 0 },
-				  { 0, 1, 1, 0 },
-				  { 1, 1, 1, 0 },
-				  { 0, 0, 0, 0 },
+				  { 0, 1, 0, 0, 0 },
+				  { 0, 1, 1, 0, 0 },
+				  { 1, 1, 1, 0, 0 },
+				  { 0, 0, 0, 0, 0 },
+				  { 0, 0, 0, 0, 0 },
 				};
 		prettyPrint(initialState);
 		prettyPrint(anotherArray);
@@ -97,10 +101,12 @@ public class TestSetGetNext {
 	@Test
 	public void testNextState(){
 		int expectedState[][] = new int[][]{
-				  { 0, 0, 0, 0 },
-				  { 1, 0, 1, 0 },
-				  { 0, 1, 1, 0 },
-				  { 0, 1, 0, 0 },
+				  { 0, 0, 0, 0, 0 },
+				  { 1, 0, 1, 0, 0 },
+				  { 0, 1, 1, 0, 0 },
+				  { 0, 1, 0, 0, 0 },
+				  { 0, 0, 0, 0, 0 },
+
 				};
 		GameOfLife gol = new GameOfLife(initialState);
 		System.out.println(gol.toString());
@@ -108,7 +114,7 @@ public class TestSetGetNext {
 		int testState[][] = gol.getCurrentState();
 		System.out.println(gol.toString());
 		prettyPrint(expectedState);
-		assertTrue(Arrays.equals(expectedState, testState));		
+		assertTrue(pedanticCompare(expectedState, testState));		
 		
 	}
 	

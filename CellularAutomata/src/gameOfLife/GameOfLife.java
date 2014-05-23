@@ -98,16 +98,26 @@ private int currentStep;
     Any live cell with two or three live neighbours lives on to the next generation.
     Any live cell with more than three live neighbours dies, as if by overcrowding.
     Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
-
+	
+	Also: 8-connected
+	Also: circular array
 	 */
 	private int applyRule(int row, int column, int [][] a_lattice)
 	{
+		/*
+		 * TODO: clever way to do this with iteration
+		 * 
+		 */
 		int liveNeighbours = 0;
 		liveNeighbours += getLeft(row, column, a_lattice);
 		liveNeighbours += getRight(row, column, a_lattice);
 		liveNeighbours += getUp(row, column, a_lattice);
 		liveNeighbours += getDown(row, column, a_lattice);
-		
+		liveNeighbours += getUpLeft(row, column, a_lattice);
+		liveNeighbours += getUpRight(row, column, a_lattice);
+		liveNeighbours += getDownLeft(row, column, a_lattice);
+		liveNeighbours += getDownRight(row, column, a_lattice);
+
 		if(a_lattice[row][column] == 0) //dead
 		{
 			if(liveNeighbours == 3)
@@ -139,7 +149,6 @@ private int currentStep;
 	//TODO: validate arguments
 	private int getLeft(int row, int column, int [][] a_lattice)
 	{
-		int value = 0;
 		if(column ==0)
 		{
 			return a_lattice[row][a_lattice[row].length - 1];
@@ -152,7 +161,6 @@ private int currentStep;
 	
 	private int getRight(int row, int column, int [][] a_lattice)
 	{
-		int value = 0;
 		if(column == a_lattice[row].length - 1)
 		{
 			return a_lattice[row][0];
@@ -166,7 +174,6 @@ private int currentStep;
 	
 	private int getUp(int row, int column, int [][] a_lattice)
 	{
-		int value = 0;
 		if(row == 0)
 		{
 			return a_lattice[a_lattice.length - 1][column];
@@ -180,7 +187,6 @@ private int currentStep;
 	
 	private int getDown(int row, int column, int [][] a_lattice)
 	{
-		int value = 0;
 		if(row == a_lattice.length - 1)
 		{
 			return a_lattice[0][column];
@@ -192,8 +198,123 @@ private int currentStep;
 		
 	}
 	
+	private int getUpRight(int row, int column, int [][] a_lattice)
+	{
+		if(row == 0)
+		{
+		
+			if(column == a_lattice[row].length - 1)
+			{
+				return a_lattice[a_lattice.length - 1][0];
+			}
+			else
+			{
+				return a_lattice[a_lattice.length - 1][column + 1]; 
+			}
+			
+		}
+		else
+		{
+			
+			if(column == a_lattice[row].length - 1)
+			{
+				return a_lattice[row-1][0];
+			}
+			else
+			{
+				return a_lattice[row-1][column + 1]; 
+			}
+		}
 	
+	}
+	private int getUpLeft(int row, int column, int [][] a_lattice)
+	{
+		if(row == 0)
+		{
+		
+			if(column ==0)
+			{
+				
+				return a_lattice[a_lattice.length - 1][a_lattice[row].length - 1];
+			}
+			else
+			{
+				return a_lattice[a_lattice.length - 1][column - 1]; 
+			}
+			
+		}
+		else
+		{
+			
+			if(column == 0)
+			{
+				return a_lattice[row-1][a_lattice[row].length - 1];
+			}
+			else
+			{
+				return a_lattice[row-1][column - 1]; 
+			}
+		}
 	
+	}
+	private int getDownRight(int row, int column, int [][] a_lattice)
+	{
+		if(row == a_lattice.length - 1)
+		{
+		
+			if(column == a_lattice[row].length - 1)
+			{
+				return a_lattice[0][0];
+			}
+			else
+			{
+				return a_lattice[0][column + 1]; 
+			}
+			
+		}
+		else
+		{
+			
+			if(column == a_lattice[row].length - 1)
+			{
+				return a_lattice[row+1][0];
+			}
+			else
+			{
+				return a_lattice[row+1][column + 1]; 
+			}
+		}
+	
+	}
+	private int getDownLeft(int row, int column, int [][] a_lattice)
+	{
+		if(row == a_lattice.length - 1)
+		{
+		
+			if(column == 0)
+			{
+				return a_lattice[0][a_lattice[row].length - 1];
+			}
+			else
+			{
+				return a_lattice[0][column - 1]; 
+			}
+			
+		}
+		else
+		{
+			
+			if(column == 0)
+			{
+				return a_lattice[row+1][a_lattice[row].length - 1];
+			}
+			else
+			{
+				return a_lattice[row+1][column - 1]; 
+			}
+		}
+	
+	}
 	public String toString()
 	{
 		String result = "";
