@@ -118,6 +118,14 @@ public class TestSetGetNext {
 		
 	}
 	
+	@Test
+	public void testToggleState()
+	{
+		GameOfLife gol = new GameOfLife(initialState);
+		gol.toggleState(0, 0);
+		assertEquals(1, gol.getStateAt(0, 0));	
+	}
+	
 	public void prettyPrint(int [][] a_lattice)
 	{
 		int rows = a_lattice.length;

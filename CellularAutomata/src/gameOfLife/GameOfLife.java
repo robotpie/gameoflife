@@ -41,7 +41,7 @@ private int currentStep;
 		
 		if(rows <= 0 || columns <= 0 || rows != columns )
 		{
-			throw new IllegalArgumentException("rows and columns must both be nonzero and equal length") ;
+			throw new IllegalArgumentException("rows and columns must both be nonzero and equal length. rows: "+rows+" , columns: "+columns);
 		}
 		for(int row = 0; row < rows; row++)
 		{
@@ -59,6 +59,20 @@ private int currentStep;
 	}
 	
 	
+	/*
+	 * return the size of 1st dimension (number of rows)
+	 */
+	public int getRows()
+	{
+		return rows;
+	}
+	/*
+	 * return the size of 2nd dimension (number of columns)
+	 */
+	public int getColumns()
+	{
+		return columns;
+	}
 	/*
 	 * since Java returns by reference here, this is leaking internals
 	 * what can we do about it?
@@ -327,5 +341,18 @@ private int currentStep;
 			result += "\n";
 		}
 		return result;
+	}
+	
+	public void toggleState(int row, int column)
+	{
+		if(lattice[row][column] == 0)
+		{
+			lattice[row][column] =1;
+		}
+		else
+		{
+			lattice[row][column] =0;
+
+		}
 	}
 }
