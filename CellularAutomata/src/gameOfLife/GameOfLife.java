@@ -1,4 +1,11 @@
 package gameOfLife;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 /*
  * should this class be immutable?
  * memory vs. time vs. parallelism considerations
@@ -52,6 +59,66 @@ private int currentStep;
 		}	
 		
 	};
+	
+	public void reset()
+	{
+		for(int row = 0; row < rows; row++)
+		{
+			for(int column = 0; column < columns; column++)
+			{
+				lattice[row][column] = 0;
+			}
+		}	
+		currentStep = 0;
+	}
+	
+	public void loadStateFromFile(File cellsFile)
+	{
+		BufferedReader reader = null;
+		
+		reset();
+
+		try {
+		    reader = new BufferedReader(new FileReader(cellsFile));
+		    String text = null;
+		    int rowIdx = 0;
+
+		    while ((text = reader.readLine()) != null) {
+		        //parse text string
+		    	if(text.charAt(0) != '!'){//else is a comment
+		    		
+		    		for(int columnIdx = 0; columnIdx < text.length(); columnIdx ++)
+		    		{
+		    			if(columnIdx < columns && rowIdx < rows) 
+		    			{
+		    				if(text.charAt(columnIdx) == '.')
+		    				{
+		    					lattice[rowIdx][columnIdx] = 0;
+		    				} 
+		    				else if(text.charAt(columnIdx) == 'O')
+		    				{
+		    					lattice[rowIdx][columnIdx] = 1;
+		    				}
+		    			}
+		    		}
+		    		rowIdx++;
+		    	}
+		    	
+		    }
+		} catch (FileNotFoundException e) {
+		    e.printStackTrace();
+		} catch (IOException e) {
+		    e.printStackTrace();
+		} finally {
+		    try {
+		        if (reader != null) {
+		            reader.close();
+		        }
+		    } catch (IOException e) {
+		    }
+		}
+		
+	}
 	
 	public int getStateAt(int row, int column)
 	{

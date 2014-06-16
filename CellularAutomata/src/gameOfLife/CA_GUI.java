@@ -3,29 +3,42 @@ package gameOfLife;
 
 
 
+import java.awt.Button;
 import java.awt.GridLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
- 
+import java.io.File;
+
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
  
 public class CA_GUI extends JPanel
-        implements MouseListener {
+        implements ActionListener {
     CA_GUI_GridContainer gridArea;
     static GameOfLife model;
     static CA_GUI gui_instance;
-    JTextArea textArea;
+    //JTextArea textArea;
     static final String NEWLINE = System.getProperty("line.separator");
-    
-    boolean started = true;
+    Button startButton;
+    Button nextGenerationButton;
+    Button resetButton;
+    Button loadButton;
+    JSpinner delaySpinner, sizeSpinner;
+    Label currentStepLabel;
+    boolean started = false;
     int millisecondsBetweenFrames = 1000;
     ActionListener listener = null;
     Timer displayTimer = null;
+    static int initialState[][];
     
+    final JFileChooser fc = new JFileChooser();
      
     public static void main(String[] args) {
         /* Use an appropriate Look and Feel */
@@ -57,7 +70,7 @@ public class CA_GUI extends JPanel
 				  { 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0 },
 				};
 		*/
-        int initialState[][] = new int[][]{
+        initialState = new int[][]{
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -109,7 +122,7 @@ public class CA_GUI extends JPanel
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -119,9 +132,7 @@ public class CA_GUI extends JPanel
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 
-    	};
-
-        
+    	};       
         
         model = new GameOfLife(initialState);
         //Schedule a job for the event dispatch thread:
@@ -150,6 +161,7 @@ public class CA_GUI extends JPanel
          
         //Display the window.
         frame.pack();
+
         frame.setVisible(true);
     }
      
@@ -159,26 +171,76 @@ public class CA_GUI extends JPanel
     	model.computeNextState();
     	//update the GUI
     	gridArea.repaint();
-    	textArea.append("Timestep: " + model.getCurrentStep() + NEWLINE);
-        textArea.setCaretPosition(textArea.getDocument().getLength());    	//System.out.println("tick was called!");
+    	if(displayTimer != null)
+    	{
+    		displayTimer.setDelay((int)delaySpinner.getModel().getValue());
+    	}
+    	currentStepLabel.setText("Current Step: " + model.getCurrentStep());
+    	currentStepLabel.repaint();
+
+    	System.out.println("tick() was called !!!");
+    	
     }
     
     
     public CA_GUI() {
         super(new GridLayout(0,1));
-                gridArea = new CA_GUI_GridContainer(model.getRows(),model.getColumns(), model);
+        gridArea = new CA_GUI_GridContainer(model.getRows(),model.getColumns(), model);
         add(gridArea);
+        /*
         textArea = new JTextArea();
         textArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setVerticalScrollBarPolicy(
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setPreferredSize(new Dimension(200, 75));
-        add(scrollPane);
-         
+        add(scrollPane);gridArea = new CA_GUI_GridContainer(model.getRows(),model.getColumns(), model);
+
+         */
+        JPanel controlsArea = new JPanel(new GridLayout(0,3));
+        resetButton = new Button("Reset");
+        resetButton.addActionListener(this);
+        resetButton.setActionCommand("reset");
+        controlsArea.add(resetButton);
+        controlsArea.add(new Label("Size:", java.awt.Label.RIGHT));
+        SpinnerModel sizeModel =
+                new SpinnerNumberModel(model.getRows(), //initial value
+                                       1, //min
+                                       1000, //max
+                                       1);//step
+        sizeSpinner = new JSpinner(sizeModel);
+        controlsArea.add(sizeSpinner);
+        
+        startButton = new Button("Start");
+        startButton.addActionListener(this);
+        startButton.setActionCommand("start");        
+        controlsArea.add(startButton);
+        controlsArea.add(new Label("Delay:", java.awt.Label.RIGHT));        
+        SpinnerModel delayModel =
+                new SpinnerNumberModel(50, //initial value
+                                       0, //min
+                                       5000, //max
+                                       1);//step
+        delaySpinner = new JSpinner(delayModel);
+        controlsArea.add(delaySpinner);
+        
+        currentStepLabel = new Label("Current step: 0");
+        controlsArea.add(currentStepLabel);  
+        
+        nextGenerationButton = new Button("Next generation");
+        nextGenerationButton.setActionCommand("step");  
+        nextGenerationButton.addActionListener(this);
+        controlsArea.add(nextGenerationButton);
+        
+        loadButton = new Button("Load from file");
+        loadButton.setActionCommand("load");
+        loadButton.addActionListener(this);
+        controlsArea.add(loadButton);
+        add(controlsArea);
+                              
         //Register for mouse events on blankArea and the panel.
         //gridArea.addMouseListener(this);
-        addMouseListener(this);
+        //addMouseListener(this);
         setPreferredSize(new Dimension(450, 450));
         setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
         
@@ -186,42 +248,113 @@ public class CA_GUI extends JPanel
         
         listener = new ActionListener(){
         	  public void actionPerformed(ActionEvent event){
-        	    tick();
+        		if(!started){
+        			displayTimer.stop();
+        		}
+        		tick();
         	  }
         	};
         
         if(started)
         {
-        	displayTimer = new Timer(500, listener);
+        	int temp = (int)delayModel.getValue();
+        	displayTimer = new Timer(temp, listener);
         	displayTimer.start();
         }
         
     }
-     
-    void eventOutput(String eventDescription, MouseEvent e) {
-        textArea.append(eventDescription + " detected on "
-                + e.getComponent().getClass().getName()
-                + "." + NEWLINE);
-        textArea.setCaretPosition(textArea.getDocument().getLength());
-    }
-     
-    public void mousePressed(MouseEvent e) {
-      //  eventOutput("Mouse pressed (# of clicks: " + e.getClickCount() + ")", e);
-    }
-     
-    public void mouseReleased(MouseEvent e) {
-       // eventOutput("Mouse released (# of clicks: " + e.getClickCount() + ")", e);
-    }
-     
-    public void mouseEntered(MouseEvent e) {
-        //eventOutput("Mouse entered", e);
-    }
-     
-    public void mouseExited(MouseEvent e) {
-        //eventOutput("Mouse exited", e);
-    }
-     
-    public void mouseClicked(MouseEvent e) {
-        //eventOutput("Mouse clicked (# of clicks: "+ e.getClickCount() + ")", e);
-    }
+    
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getActionCommand() == "start")
+		{
+			//toggle button text and action
+			startButton.setLabel("Stop");
+			startButton.setActionCommand("stop");
+			started= true;
+			int temp = (int)(delaySpinner.getModel().getValue());
+			//System.out.println("setting timer to: " + temp);
+        	displayTimer = new Timer(temp, listener);
+        	displayTimer.start();
+			
+		}
+		else if(e.getActionCommand() == "stop")
+		{
+			//toggle button text and action
+			startButton.setLabel("Start");
+			startButton.setActionCommand("start");
+			started= false;
+			if(displayTimer != null)
+			{
+				displayTimer.stop();
+			}
+		}
+		else if(e.getActionCommand() == "step")
+		{
+			System.out.println("step button was clicked");
+
+			if(!started){
+				tick();
+			}
+		}
+		else if(e.getActionCommand() == "reset")
+		{
+			
+			if(displayTimer != null)
+			{
+				displayTimer.stop();
+			}
+			started= false;
+			startButton.setLabel("Start");
+			startButton.setActionCommand("start");
+			resetGrid();
+		}
+		else if(e.getActionCommand() == "load")
+		{
+			
+			if(displayTimer != null)
+			{
+				displayTimer.stop();
+			}			
+			started= false;
+			startButton.setLabel("Start");
+			startButton.setActionCommand("start");
+			//TODO: get this working and resize the grid beforehand!!!
+			//resetGrid();
+			
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("Game of Life Cell files", "cells");
+			fc.setFileFilter(filter);
+			int returnVal = fc.showOpenDialog(this);
+			
+	        if (returnVal == JFileChooser.APPROVE_OPTION) {
+	            File file = fc.getSelectedFile();
+	            model.loadStateFromFile(file);
+	            gridArea.repaint();
+	            
+	            currentStepLabel.setText("Current Step: " + model.getCurrentStep());
+	        	currentStepLabel.repaint();
+
+	        } else {
+	            //user cancelled or something
+	        }
+		}
+	}
+
+	private void resetGrid(){
+		
+	
+		
+		/*
+		this.remove(gridArea);
+		invalidate();
+		int temp = (int)(sizeSpinner.getModel().getValue());
+		model = new GameOfLife(temp, temp);
+		gridArea = new CA_GUI_GridContainer(model.getRows(),model.getColumns(), model);
+		this.add(gridArea);
+		
+		revalidate();
+		repaint();
+		*/
+	}
+	
 }
