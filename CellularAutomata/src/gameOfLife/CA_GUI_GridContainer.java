@@ -12,10 +12,11 @@ import java.awt.event.MouseListener;
 
 //TODO: should we use MVC pattern here?
 public class CA_GUI_GridContainer extends JPanel{
-    /**
-	 * automagically generated id
+   
+	/**
+	 * 
 	 */
-	//private static final long serialVersionUID = 7832885560545657000L;
+	private static final long serialVersionUID = 486835360349182890L;
 
 	Dimension minSize = new Dimension(5,5);
     
@@ -46,7 +47,36 @@ public class CA_GUI_GridContainer extends JPanel{
         setBorder(BorderFactory.createLineBorder(Color.black));
     }
 
-   
+    public void reset(int newRows, int newColumns, GameOfLife newModel) {
+    	
+    	for(int row = 0; row < rows; row++)
+    	{
+    		for(int column = 0; column < columns; column++)
+    		{
+    			remove(tileGrid[row][column]);
+    		}
+    		
+    	}
+    	this.model = newModel;
+    	this.rows = newRows;
+    	this.columns = newColumns;
+    	this.setLayout(new GridLayout(rows,columns));
+    	tileGrid = new CA_GUI_Tile[rows][columns];
+    	for(int row = 0; row < rows; row++)
+    	{
+    		for(int column = 0; column < columns; column++)
+    		{
+    			tileGrid[row][column] = new CA_GUI_Tile(row, column, model);
+    			add(tileGrid[row][column]);
+    		}
+    		
+    	}
+    	
+    	revalidate();
+    	repaint();
+    }
+    
+    
     public Dimension getMinimumSize() {
         return minSize;
     }

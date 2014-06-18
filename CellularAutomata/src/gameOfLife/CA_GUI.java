@@ -332,11 +332,15 @@ public class CA_GUI extends JPanel
 			
 	        if (returnVal == JFileChooser.APPROVE_OPTION) {
 	            File file = fc.getSelectedFile();
-	            model.loadStateFromFile(file);
-	            gridArea.repaint();
+	            
+	            int temp = (int)(sizeSpinner.getModel().getValue());
+	    		model = new GameOfLife(temp, temp);
+	            
+	            model.loadStateFromFile(file);            
 	            
 	            currentStepLabel.setText("Current Step: " + model.getCurrentStep());
 	        	currentStepLabel.repaint();
+	        	gridArea.reset(temp, temp, model);
 
 	        } else {
 	            //user cancelled or something
@@ -347,16 +351,17 @@ public class CA_GUI extends JPanel
 	private void resetGrid(){
 		
 	
+		//invalidate();		
+		//this.remove(gridArea);
 		
-		this.remove(gridArea);
-		invalidate();
 		int temp = (int)(sizeSpinner.getModel().getValue());
 		model = new GameOfLife(temp, temp);
-		gridArea = new CA_GUI_GridContainer(model.getRows(),model.getColumns(), model);
-		this.add(gridArea);
+		//gridArea = new CA_GUI_GridContainer(model.getRows(),model.getColumns(), model);
+		//this.add(gridArea);
+		gridArea.reset(temp, temp, model);
 		
-		revalidate();
-		repaint();
+		//revalidate();
+		//repaint();
 		
 	}
 	
