@@ -344,7 +344,7 @@ public class CA_GUI extends JPanel
 		
 	
 		int x = 1;//dummy
-		
+		x++;
 		this.remove(gridArea);
 		invalidate();
 		int temp = (int)(sizeSpinner.getModel().getValue());
