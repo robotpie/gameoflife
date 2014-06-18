@@ -5,22 +5,22 @@ package gameOfLife;
 
 import java.awt.Button;
 import java.awt.GridLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseEvent;
 import java.io.File;
 
+
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
  
 public class CA_GUI extends JPanel
         implements ActionListener {
+	
+	private static final long serialVersionUID = 7832885560545657000L;
+	
+	
     CA_GUI_GridContainer gridArea;
     static GameOfLife model;
     static CA_GUI gui_instance;
@@ -32,6 +32,7 @@ public class CA_GUI extends JPanel
     Button loadButton;
     JSpinner delaySpinner, sizeSpinner;
     Label currentStepLabel;
+    
     boolean started = false;
     int millisecondsBetweenFrames = 1000;
     ActionListener listener = null;
@@ -180,6 +181,7 @@ public class CA_GUI extends JPanel
 
     	System.out.println("tick() was called !!!");
     	
+    	
     }
     
     
@@ -238,6 +240,7 @@ public class CA_GUI extends JPanel
         controlsArea.add(loadButton);
         add(controlsArea);
                               
+        
         //Register for mouse events on blankArea and the panel.
         //gridArea.addMouseListener(this);
         //addMouseListener(this);
@@ -251,7 +254,8 @@ public class CA_GUI extends JPanel
         		if(!started){
         			displayTimer.stop();
         		}
-        		tick();
+
+        	    tick();
         	  }
         	};
         
@@ -343,8 +347,7 @@ public class CA_GUI extends JPanel
 	private void resetGrid(){
 		
 	
-		int x = 1;//dummy
-		x++;
+		
 		this.remove(gridArea);
 		invalidate();
 		int temp = (int)(sizeSpinner.getModel().getValue());
@@ -357,4 +360,5 @@ public class CA_GUI extends JPanel
 		
 	}
 	
+     
 }
