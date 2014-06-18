@@ -343,8 +343,8 @@ public class CA_GUI extends JPanel
 	private void resetGrid(){
 		
 	
+		int x = 1;//dummy
 		
-		/*
 		this.remove(gridArea);
 		invalidate();
 		int temp = (int)(sizeSpinner.getModel().getValue());
@@ -354,7 +354,7 @@ public class CA_GUI extends JPanel
 		
 		revalidate();
 		repaint();
-		*/
+		
 	}
 	
 }

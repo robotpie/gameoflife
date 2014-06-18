@@ -15,7 +15,7 @@ public class CA_GUI_GridContainer extends JPanel{
     /**
 	 * automagically generated id
 	 */
-	private static final long serialVersionUID = 7832885560545657000L;
+	//private static final long serialVersionUID = 7832885560545657000L;
 
 	Dimension minSize = new Dimension(5,5);
     
