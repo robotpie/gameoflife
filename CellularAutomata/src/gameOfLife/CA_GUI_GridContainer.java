@@ -18,7 +18,7 @@ public class CA_GUI_GridContainer extends JPanel{
 	 */
 	private static final long serialVersionUID = 486835360349182890L;
 
-	Dimension minSize = new Dimension(5,5);
+	Dimension minSize = new Dimension(1,1);
     
     CA_GUI_Tile tileGrid[][];
     int rows, columns;

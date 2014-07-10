@@ -3,6 +3,7 @@ package gameOfLife;
 
 
 
+import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.GridLayout;
 import java.awt.Dimension;
@@ -10,7 +11,6 @@ import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -186,9 +186,9 @@ public class CA_GUI extends JPanel
     
     
     public CA_GUI() {
-        super(new GridLayout(0,1));
+        super(new BorderLayout(0,1));
         gridArea = new CA_GUI_GridContainer(model.getRows(),model.getColumns(), model);
-        add(gridArea);
+        add(gridArea, BorderLayout.CENTER);
         /*
         textArea = new JTextArea();
         textArea.setEditable(false);
@@ -200,6 +200,7 @@ public class CA_GUI extends JPanel
 
          */
         JPanel controlsArea = new JPanel(new GridLayout(0,3));
+        controlsArea.setPreferredSize(new Dimension(150, 150));
         resetButton = new Button("Reset");
         resetButton.addActionListener(this);
         resetButton.setActionCommand("reset");
@@ -238,7 +239,7 @@ public class CA_GUI extends JPanel
         loadButton.setActionCommand("load");
         loadButton.addActionListener(this);
         controlsArea.add(loadButton);
-        add(controlsArea);
+        add(controlsArea, BorderLayout.SOUTH);
                               
         
         //Register for mouse events on blankArea and the panel.

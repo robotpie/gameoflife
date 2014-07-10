@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class CA_GUI_Tile extends JLabel implements MouseListener {
-    Dimension minSize = new Dimension(5,5);
+    Dimension minSize = new Dimension(1,1);
     GameOfLife model;
     int row_id, column_id;
 
@@ -43,11 +43,13 @@ public class CA_GUI_Tile extends JLabel implements MouseListener {
 		model.toggleState(row_id, column_id);
 		if(model.getStateAt(row_id, column_id) == 1)
 		{
-			setBackground(Color.black);
+			//setBackground(Color.black);
+			setBackground(Color.green);
 		}
 		else
 		{
-			setBackground(Color.white);
+			//setBackground(Color.white);
+			setBackground(Color.black);
 		}
 		repaint();
 		System.out.println("grid was clicked: " + row_id + ", " + column_id);
@@ -60,11 +62,13 @@ public class CA_GUI_Tile extends JLabel implements MouseListener {
 		//determine color
 		if(model.getStateAt(row_id, column_id) == 1)
 		{
-			setBackground(Color.black);
+			//setBackground(Color.black);
+			setBackground(Color.green);
 		}
 		else
 		{
-			setBackground(Color.white);
+			//setBackground(Color.white);
+			setBackground(Color.black);
 		}
 		//System.out.println("grid was painted: " + row_id + ", " + column_id);
 		super.paint(g);
