@@ -1,7 +1,23 @@
+/*
+ * This file is part of CellularAutomata - a virtual laboratory for experiementing with CA's
+ * Copyright (C) Lassonde School of Engineering 2014
+ * This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ */
+
+
 package gameOfLife;
-
-
-
 
 import java.awt.BorderLayout;
 import java.awt.Button;
@@ -15,8 +31,7 @@ import java.io.File;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
  
-public class CA_GUI extends JPanel
-        implements ActionListener {
+public class CA_GUI extends JPanel implements ActionListener {
 	
 	private static final long serialVersionUID = 7832885560545657000L;
 	
@@ -57,20 +72,7 @@ public class CA_GUI extends JPanel
         }
         /* Turn off metal's use of bold fonts */
         UIManager.put("swing.boldMetal", Boolean.FALSE);
-        /*
-        int initialState[][] = new int[][]{
-				  { 0, 1, 0, 0, 0, 0, 0, 0 ,0, 0 },
-				  { 0, 0, 1, 0, 0, 0, 0, 0 ,0, 0 },
-				  { 1, 1, 1, 0, 0, 0, 0, 0 ,0, 0 },
-				  { 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0 },
-				  { 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0 },
-				  { 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0 },
-				  { 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0 },
-				  { 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0 },
-				  { 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0 },
-				  { 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0 },
-				};
-		*/
+        
         initialState = new int[][]{
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -123,7 +125,7 @@ public class CA_GUI extends JPanel
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -165,7 +167,10 @@ public class CA_GUI extends JPanel
 
         frame.setVisible(true);
     }
-     
+    
+    /*
+     * advance the time step of the Cellular Automaton
+     */
     private void tick()
     {
     	//update the CA
@@ -189,16 +194,7 @@ public class CA_GUI extends JPanel
         super(new BorderLayout(0,1));
         gridArea = new CA_GUI_GridContainer(model.getRows(),model.getColumns(), model);
         add(gridArea, BorderLayout.CENTER);
-        /*
-        textArea = new JTextArea();
-        textArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setVerticalScrollBarPolicy(
-                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setPreferredSize(new Dimension(200, 75));
-        add(scrollPane);gridArea = new CA_GUI_GridContainer(model.getRows(),model.getColumns(), model);
-
-         */
+       
         JPanel controlsArea = new JPanel(new GridLayout(0,3));
         controlsArea.setPreferredSize(new Dimension(150, 150));
         resetButton = new Button("Reset");
@@ -324,9 +320,7 @@ public class CA_GUI extends JPanel
 			started= false;
 			startButton.setLabel("Start");
 			startButton.setActionCommand("start");
-			//TODO: get this working and resize the grid beforehand!!!
-			//resetGrid();
-			
+		
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("Game of Life Cell files", "cells");
 			fc.setFileFilter(filter);
 			int returnVal = fc.showOpenDialog(this);
@@ -349,20 +343,13 @@ public class CA_GUI extends JPanel
 		}
 	}
 
-	private void resetGrid(){
-		
-	
-		//invalidate();		
-		//this.remove(gridArea);
-		
+	/* 
+	 * create a new game of life with the new grid size
+	 */
+	private void resetGrid(){					
 		int temp = (int)(sizeSpinner.getModel().getValue());
-		model = new GameOfLife(temp, temp);
-		//gridArea = new CA_GUI_GridContainer(model.getRows(),model.getColumns(), model);
-		//this.add(gridArea);
-		gridArea.reset(temp, temp, model);
-		
-		//revalidate();
-		//repaint();
+		model = new GameOfLife(temp, temp);		
+		gridArea.reset(temp, temp, model);	
 		
 	}
 	

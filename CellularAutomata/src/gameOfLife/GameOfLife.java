@@ -1,3 +1,22 @@
+/*
+ * This file is part of CellularAutomata - a virtual laboratory for experiementing with CA's
+ * Copyright (C) Lassonde School of Engineering 2014
+ * This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ */
+
+
 package gameOfLife;
 
 import java.io.BufferedReader;
@@ -13,9 +32,6 @@ import java.io.IOException;
  * 
  */
 
-///TODO: add in timestep field
-//TODO: add method to initialize by string
-//TODO: add method to compute next state use conway rules
 
 /*
  * right now interface is tied to internal representation -> how to generalize?
@@ -23,24 +39,29 @@ import java.io.IOException;
  * 
  */
 public class GameOfLife {
-private int lattice[][]; //TODO: stores an int should this be an enum, or class?
+private int lattice[][]; //stores an int should this be an enum, or class?
 private int rows;
 private int columns;
 private int currentStep;
 
+	/*
+	 * constructor for empty lattice
+	 */
 	public GameOfLife(int rows, int columns){
 		currentStep = 0;
 		if(rows <= 0 || columns <= 0)
 		{
 			throw new IllegalArgumentException("rows and columns must both be nonzero") ;
 		}
-		lattice = new int[rows][columns];//assume Java initializes to 0
+		lattice = new int[rows][columns];// Java initializes to 0
 		this.rows = rows;
 		this.columns = columns;
 	};
 	
+	/*
+	 * constructor that copies an initial state array
+	 */
 	public GameOfLife(int [][] initialState){
-		//GameOfLife(initialState.length, initialState[0].length); - can't chain ctor calls apparently
 		currentStep = 0;
 		this.rows = initialState.length;
 		this.columns = initialState[0].length;
@@ -59,7 +80,9 @@ private int currentStep;
 		}	
 		
 	};
-	
+	/*
+	 * resets state to all empty
+	 */
 	public void reset()
 	{
 		for(int row = 0; row < rows; row++)
@@ -72,6 +95,10 @@ private int currentStep;
 		currentStep = 0;
 	}
 	
+	/*
+	 * loads an initial state from file
+	 * 
+	 */
 	public void loadStateFromFile(File cellsFile)
 	{
 		BufferedReader reader = null;
@@ -120,6 +147,10 @@ private int currentStep;
 		
 	}
 	
+	/*
+	 * 
+	 * returns the state at a particular row and column
+	 */
 	public int getStateAt(int row, int column)
 	{
 		return lattice[row][column];
@@ -140,11 +171,11 @@ private int currentStep;
 	{
 		return columns;
 	}
-	/*
-	 * since Java returns by reference here, this is leaking internals
-	 * what can we do about it?
-	 */
 	
+	/*
+	 * Used for testing. Critique: leaks the class privates 
+	 * TODO: change tests to use public methods
+	*/	
 	public int[][] getCurrentState()
 	{
 		return lattice;
@@ -155,6 +186,10 @@ private int currentStep;
 		return currentStep;
 	}
 	
+	/*
+	 * Advance the state of the game by one time step
+	 * 
+	 */
 	public void computeNextState(){
 		int nextState [][] = new int[rows][columns];
 		
@@ -165,7 +200,7 @@ private int currentStep;
 			{
 				nextState[row][column] = applyRule(row,column,lattice);
 			}
-		}		
+		}
 		
 		//replace lattice with next state
 		lattice = nextState;		
@@ -173,7 +208,7 @@ private int currentStep;
 	}
 	
 	/*
-	 * for now implement conway's game of life:
+	 *  implement conway's game of life:
 	 * 
     Any live cell with fewer than two live neighbours dies, as if caused by under-population.
     Any live cell with two or three live neighbours lives on to the next generation.
@@ -227,7 +262,9 @@ private int currentStep;
 		
 	}
 	
-	//TODO: validate arguments
+	/*
+	 * get the value of a neighbouring cell, taking into account edge or border conditions
+	 */
 	private int getLeft(int row, int column, int [][] a_lattice)
 	{
 		if(column ==0)
@@ -239,7 +276,9 @@ private int currentStep;
 			return a_lattice[row][column - 1];
 		}
 	}
-	
+	/*
+	 * get the value of a neighbouring cell, taking into account edge or border conditions
+	 */
 	private int getRight(int row, int column, int [][] a_lattice)
 	{
 		if(column == a_lattice[row].length - 1)
@@ -252,7 +291,9 @@ private int currentStep;
 		}
 		
 	}
-	
+	/*
+	 * get the value of a neighbouring cell, taking into account edge or border conditions
+	 */
 	private int getUp(int row, int column, int [][] a_lattice)
 	{
 		if(row == 0)
@@ -265,7 +306,9 @@ private int currentStep;
 		}
 		
 	}
-	
+	/*
+	 * get the value of a neighbouring cell, taking into account edge or border conditions
+	 */
 	private int getDown(int row, int column, int [][] a_lattice)
 	{
 		if(row == a_lattice.length - 1)
@@ -278,7 +321,9 @@ private int currentStep;
 		}
 		
 	}
-	
+	/*
+	 * get the value of a neighbouring cell, taking into account edge or border conditions
+	 */
 	private int getUpRight(int row, int column, int [][] a_lattice)
 	{
 		if(row == 0)
@@ -308,6 +353,9 @@ private int currentStep;
 		}
 	
 	}
+	/*
+	 * get the value of a neighbouring cell, taking into account edge or border conditions
+	 */
 	private int getUpLeft(int row, int column, int [][] a_lattice)
 	{
 		if(row == 0)
@@ -338,6 +386,9 @@ private int currentStep;
 		}
 	
 	}
+	/*
+	 * get the value of a neighbouring cell, taking into account edge or border conditions
+	 */
 	private int getDownRight(int row, int column, int [][] a_lattice)
 	{
 		if(row == a_lattice.length - 1)
@@ -367,6 +418,9 @@ private int currentStep;
 		}
 	
 	}
+	/*
+	 * get the value of a neighbouring cell, taking into account edge or border conditions
+	 */
 	private int getDownLeft(int row, int column, int [][] a_lattice)
 	{
 		if(row == a_lattice.length - 1)
@@ -396,6 +450,11 @@ private int currentStep;
 		}
 	
 	}
+	/*
+	 * returns a string representation of the current state
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString()
 	{
 		String result = "";
@@ -410,6 +469,9 @@ private int currentStep;
 		return result;
 	}
 	
+	/*
+	 * allow for interactivity; the user clicks cells on the GUI to flip their state
+	 */
 	public void toggleState(int row, int column)
 	{
 		if(lattice[row][column] == 0)

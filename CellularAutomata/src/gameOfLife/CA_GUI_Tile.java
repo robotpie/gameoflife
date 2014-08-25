@@ -1,3 +1,22 @@
+/*
+ * This file is part of CellularAutomata - a virtual laboratory for experiementing with CA's
+ * Copyright (C) Lassonde School of Engineering 2014
+ * This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ */
+
+
 package gameOfLife;
 
 import javax.swing.*;
@@ -7,7 +26,13 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+/*
+ * GUI element representing one cell in the game of life
+ * all methods here are framework methods defined by the Java API, so I would have a look there...
+ */
 public class CA_GUI_Tile extends JLabel implements MouseListener {
+	
+	private static final long serialVersionUID = 7832885560545657999L;
     Dimension minSize = new Dimension(1,1);
     GameOfLife model;
     int row_id, column_id;
@@ -73,23 +98,7 @@ public class CA_GUI_Tile extends JLabel implements MouseListener {
 		//System.out.println("grid was painted: " + row_id + ", " + column_id);
 		super.paint(g);
 	}
-	/*
-	@Override
-	public void update(Graphics g)
-	{
-		//determine color
-		if(model.getStateAt(row_id, column_id) == 1)
-		{
-			setBackground(Color.black);
-		}
-		else
-		{
-			setBackground(Color.white);
-		}
-		//System.out.println("grid was updated: " + row_id + ", " + column_id);
-		super.update(g);
-	}
-*/
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
